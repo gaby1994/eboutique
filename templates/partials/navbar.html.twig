@@ -37,12 +37,17 @@
 
             {# Desktop : Connexion / Inscription (ou Profil/Admin) à droite #}
             <ul class="navbar-nav d-none d-lg-flex ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link {% if app.request.attributes.get('_route') == 'app_cart' %}active fw-bold text-primary{% endif %}"
-                       href="{{ path('app_cart') }}">
-                        <i class="fa-solid fa-cart-shopping"></i> Panier
-                    </a>
-                </li>
+
+                {# Lien Panier uniquement si pas admin #}
+                {% if not is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if app.request.attributes.get('_route') == 'app_cart' %}active fw-bold text-primary{% endif %}"
+                           href="{{ path('app_cart') }}">
+                            <i class="fa-solid fa-cart-shopping"></i> Panier
+                        </a>
+                    </li>
+                {% endif %}
+
                 {% if app.user %}
                     {% if is_granted('ROLE_ADMIN') %}
                         <li class="nav-item">
@@ -91,6 +96,8 @@
                     <a class="nav-link {% if app.request.attributes.get('_route') == 'app_list_products' %}active fw-bold text-primary{% endif %}"
                        href="{{ path('app_list_products') }}">Catalogue</a>
                 </li>
+
+                {# Mobile : Admin / Profil #}
                 {% if app.user %}
                     {% if is_granted('ROLE_ADMIN') %}
                         <li class="nav-item">
@@ -119,6 +126,14 @@
                     <li class="nav-item">
                         <a class="nav-link {% if app.request.attributes.get('_route') == 'app_register' %}active fw-bold text-primary{% endif %}"
                            href="{{ path('app_register') }}">Inscription</a>
+                    </li>
+                {% endif %}
+
+                {# Mobile : Panier uniquement si pas admin #}
+                {% if not is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if app.request.attributes.get('_route') == 'app_cart' %}active fw-bold text-primary{% endif %}"
+                           href="{{ path('app_cart') }}">Panier</a>
                     </li>
                 {% endif %}
             </ul>

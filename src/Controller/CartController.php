@@ -15,6 +15,13 @@ class CartController extends AbstractController
     #[Route('/cart', name: 'app_cart')]
     public function index(CartService $cartService, ProductRepository $productRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $this->addFlash('warning', 'Vous n’avez pas accès au panier.');
+            return $this->redirectToRoute('app_home'); // ou vers le tableau de bord admin
+        }
+
         if ($this->getUser()) {
             $cartService->restoreFromDatabase($this->getUser());
         }
@@ -31,6 +38,8 @@ class CartController extends AbstractController
     #[Route('/cart/add/{id}', name: 'app_cart_add')]
     public function add(int $id, CartService $cartService): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         if ($this->getUser()) {
             $cartService->restoreFromDatabase($this->getUser());
         }
@@ -43,6 +52,8 @@ class CartController extends AbstractController
     #[Route('/cart/decrease/{id}', name: 'app_cart_decrease')]
     public function decrease(int $id, CartService $cartService): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         if ($this->getUser()) {
             $cartService->restoreFromDatabase($this->getUser());
         }
@@ -55,6 +66,8 @@ class CartController extends AbstractController
     #[Route('/cart/remove/{id}', name: 'app_cart_remove')]
     public function remove(int $id, CartService $cartService): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         if ($this->getUser()) {
             $cartService->restoreFromDatabase($this->getUser());
         }
@@ -67,6 +80,8 @@ class CartController extends AbstractController
     #[Route('/cart/clear', name: 'app_cart_clear')]
     public function clear(CartService $cartService): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         if ($this->getUser()) {
             $cartService->restoreFromDatabase($this->getUser());
         }
@@ -79,6 +94,13 @@ class CartController extends AbstractController
     #[Route('/cart/checkout', name: 'app_cart_checkout')]
     public function checkout(CartService $cartService, ProductRepository $productRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $this->addFlash('warning', 'Vous n’avez pas accès au panier.');
+            return $this->redirectToRoute('app_home'); // ou vers le tableau de bord admin
+        }
+
         if ($this->getUser()) {
             $cartService->restoreFromDatabase($this->getUser());
         }
@@ -108,6 +130,13 @@ class CartController extends AbstractController
     #[Route('/cart/confirm', name: 'app_cart_confirm', methods: ['POST'])]
     public function confirm(Request $request, CartService $cartService, OrdersService $ordersService, ProductRepository $productRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $this->addFlash('warning', 'Vous n’avez pas accès au panier.');
+            return $this->redirectToRoute('app_home'); // ou vers le tableau de bord admin
+        }
+
         $user = $this->getUser();
         if (!$user) {
             $this->addFlash('info', 'Veuillez vous connecter pour valider votre panier.');

@@ -20,6 +20,7 @@ class CommandLine
     private ?Orders $orders = null;
 
     #[ORM\ManyToOne(inversedBy: 'commandLines')]
+	#[ORM\JoinColumn(onDelete: "SET NULL", nullable: true)]
     private ?Product $product = null;
 
     public function getId(): ?int
