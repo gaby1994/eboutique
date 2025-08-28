@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commande confirmée n°{{ order.id }}{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="text-center">Commande n°{{ order.id }}</h1>
+    <p><strong>Date :</strong> {{ order.dateHour|date('d/m/Y H:i') }}</p>
+    <p><strong>Statut :</strong> {{ order.valid ? 'Validée' : 'En attente' }}</p>
+
+    <hr>
+
+    <h3>Articles</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Produit</th>
+                <th>Quantité</th>
+                <th>Prix unitaire</th>
+                <th>Total ligne</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set totalFinal = 0 %}
+            {% for line in order.commandLines %}
+                {% set unit = line.product.priceHT %}
+                {% set totalLigne = unit * line.quantity %}
+                {% set totalFinal = totalFinal + totalLigne %}
+                <tr>
+                    <td>{{ line.product.name }}</td>
+                    <td>{{ line.quantity }}</td>
+                    <td>{{ unit|number_format(2, ',', ' ') }} €</td>
+                    <td>{{ totalLigne|number_format(2, ',', ' ') }} €</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4" class="text-center">Votre panier est vide</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="3" class="text-end">Total</th>
+                <th>{{ totalFinal|number_format(2, ',', ' ') }} €</th>
+            </tr>
+        </tfoot>
+    </table>
+
+    <hr>
+
+    <div class="text-center">
+        <h3>Commande livrée à l'adresse suivante : </h3>
+        <p>
+            {{ order.customerAddress.firstName }} {{ order.customerAddress.name }}<br>
+            {{ order.customerAddress.address }}<br>
+            {{ order.customerAddress.cp }} {{ order.customerAddress.city }} — {{ order.customerAddress.country }}<br>
+            📞 {{ order.customerAddress.phoneNumber }}
+        </p>
+    </div>
+
+    <a href="{{ path('app_profile_orders') }}" class="btn btn-secondary mt-3">Voir mes commandes</a>
+</div>
+{% endblock %}

@@ -1,0 +1,75 @@
+body {
+    background-color: skyblue;
+}
+
+.card.h-100 {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Image du produit cadrée et uniforme */
+/*.product-img-container {
+    width: 100%;
+    height: 200px; /* fixe la hauteur de l'espace image */
+    /*overflow: hidden;
+    background: #f8f9fa; /* léger fond gris clair pour l’esthétique */
+/*}
+
+.product-img-container img {
+    max-height: 100%;
+    object-fit: contain; /* l'image garde ses proportions sans être coupée */
+/*}
+
+/* Hover léger sur les cartes */
+.card:hover {
+    transform: translateY(-5px);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Boutons actifs */
+.categories-nav .btn.active {
+    background-color: #0d6efd;
+    color: #fff;
+    border-color: #0d6efd;
+}
+
+/* Barre des catégories responsive */
+.categories-nav {
+    -webkit-overflow-scrolling: touch; /* inertie pour iOS */
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: rgba(0,0,0,0.2) transparent; /* Firefox */
+}
+
+/* Texte centré dans les cartes */
+.card-title, .card-text {
+    text-align: center;
+}
+
+.categories-nav-wrapper {
+    width: 100%;
+}
+
+.categories-nav::-webkit-scrollbar {
+    height: 6px;
+}
+
+.categories-nav::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 3px;
+}
+
+.categories-nav::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Les boutons ont un minimum width pour rester lisibles */
+.categories-nav .btn {
+    white-space: nowrap;
+    flex: 0 0 auto;
+}
+
+.nav-link.active {
+    color: #0d6efd !important;   /* bleu */
+    border-bottom: 2px solid #0d6efd;
+}

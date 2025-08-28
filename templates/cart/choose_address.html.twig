@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Validation du panier{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="text-center">Choisir une adresse de livraison</h1>
+
+    <div class="mb-3">
+        <h4>Récapitulatif</h4>
+        <ul>
+            {% for item in cartItems %}
+                <li>{{ item.product.name }} × {{ item.quantity }}</li>
+            {% endfor %}
+        </ul>
+        <p><strong>Total :</strong> {{ total|number_format(2, ',', ' ') }} €</p>
+    </div>
+
+    {% if addresses is empty%}
+        <h4>Vous devez ajouter une adresse de livraison<h4>
+    {% else %}
+        <form method="post" action="{{ path('app_cart_confirm') }}">
+            <div class="list-group">
+                {% for address in addresses %}
+                    <label class="list-group-item">
+                        <input type="radio" name="address_id" value="{{ address.id }}" required>
+                        {{ address.firstName }} {{ address.name }} — {{ address.address }}, {{ address.cp }} {{ address.city }} ({{ address.country }})
+                    </label>
+                {% else %}
+                    <div class="alert alert-info">Vous n’avez pas encore d’adresse. <a href="{{ path('app_profile_addresses') }}">Ajouter une adresse</a></div>
+                {% endfor %}
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-3">Confirmer ma commande</button>
+        </form>
+    {% endif %}
+    <br>     
+    <a href="{{ path('app_profile_new_address') }}" class="btn btn-primary">Nouvelle Adresse de Livraison</a>
+</div>
+{% endblock %}

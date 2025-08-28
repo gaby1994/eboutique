@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Panier{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="mb-4 text-center">Mon Panier</h1>
+
+    {% if cartItems is empty %}
+        <p>Votre panier est vide.</p>
+    {% else %}
+        <table class="table table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>Produit</th>
+                    <th>Prix unitaire</th>
+                    <th>Quantité</th>
+                    <th>Sous-total</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cartItems %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.product.priceHT }} €</td>
+                        <td class="d-flex align-items-center">
+                            <a href="{{ path('app_cart_decrease', {id: item.product.id}) }}" class="btn btn-sm btn-outline-secondary me-1">➖</a>
+                            <span class="px-2">{{ item.quantity }}</span>
+                            <a href="{{ path('app_cart_add', {id: item.product.id}) }}" class="btn btn-sm btn-outline-secondary ms-1">➕</a>
+                        </td>
+                        <td>{{ item.subtotal }} €</td>
+                        <td>
+                            <a href="{{ path('app_cart_remove', {id: item.product.id}) }}" class="btn btn-sm btn-danger">❌ Retirer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h3 class="mt-3">Total : {{ total }} €</h3>
+
+        <a href="{{ path('app_cart_clear') }}" class="btn btn-outline-danger mt-3">🗑️ Vider le panier</a>
+        <a href="{{ path('app_cart_checkout') }}" class="btn btn-success mt-3">✅ Valider le panier</a>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{{ form_start(form, {'attr': {'class': 'w-50 mx-auto'}}) }}
+    {% for field in form %}
+        <div class="mb-3">
+            {{ form_label(field, null, {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(field, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(field) }}
+        </div>
+    {% endfor %}
+
+    <div class="text-left">
+        <button type="submit" class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+    </div>
+{{ form_end(form) }}

@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Produits{% endblock %}
+
+{% block body %}
+<div class="container d-flex flex-column align-items-center mt-4">
+
+    <h1 class="mb-4 text-center">Faites un joli pansage pour votre cheval</h1>
+
+    {# Barre des catégories centrée #}
+    <div class="categories-nav-wrapper mb-4">
+
+        {# Dropdown visible sur mobile #}
+        <div class="d-block d-md-none dropdown">
+            <button class="btn btn-outline-primary dropdown-toggle w-100" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                {% if currentCategory %}
+                    {{ currentCategory.name }}
+                {% else %}
+                    Toutes les catégories
+                {% endif %}
+            </button>
+            <ul class="dropdown-menu w-100" aria-labelledby="categoryDropdown">
+                <li>
+                    <a class="dropdown-item {% if currentCategory is null %}active{% endif %}" href="{{ path('app_list_products') }}">
+                        Tous les articles
+                    </a>
+                </li>
+                {% for category in categories %}
+                    <li>
+                        <a class="dropdown-item {% if currentCategory is not null and category.id == currentCategory.id %}active{% endif %}" 
+                           href="{{ path('app_products_by_category', {idCategory: category.id}) }}">
+                            {{ category.name }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        {# Barre scrollable centrée sur Desktop/Tablet #}
+        <div class="categories-nav d-none d-md-flex justify-content-center flex-row flex-wrap gap-2 px-2">
+            <a href="{{ path('app_list_products') }}" 
+               class="btn btn-outline-primary {% if currentCategory is null %}active{% endif %}">
+                Tous les articles
+            </a>
+            {% for category in categories %}
+                <a href="{{ path('app_products_by_category', {idCategory: category.id}) }}" 
+                   class="btn btn-outline-primary {% if currentCategory is not null and category.id == currentCategory.id %}active{% endif %}">
+                    {{ category.name }}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    {# Produits centrés #}
+    <div class="row justify-content-center g-4 w-100">
+        {% for product in products %}
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex">
+                <div class="card h-100 shadow-sm w-100">
+
+                    {# Image produit - gestion via Bootstrap #}
+                    <div class="product-img-container d-flex justify-content-center align-items-center">
+                        {% if product.media|length > 0 %}
+                            <img src="{{ asset(product.media[0].path) }}" 
+                                 class="img-fluid w-75 h-75" 
+                                 alt="{{ product.name }}">
+                        {% else %}
+                            <img src="{{ asset('images/default-product.png') }}" 
+                                 class="img-fluid w-75 h-75" 
+                                 alt="{{ product.name }}">
+                        {% endif %}
+                    </div>
+
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title text-center">{{ product.name }}</h5>
+                        <p class="card-text flex-grow-1 text-center">
+                            {{ product.description|length > 120 ? product.description[:120] ~ '...' : product.description }}
+                        </p>
+
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <span class="fw-bold">{{ product.priceHT }} €</span>
+                            <a href="{{ path('app_cart_add', {'id': product.id}) }}" class="btn btn-success btn-sm">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                                Ajouter au panier
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p class="text-center">Aucun produit disponible pour cette catégorie.</p>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

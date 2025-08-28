@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration - Gestion du catalogue{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Gestion du catalogue</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <ul class="list-group text-center">
+                <li class="list-group-item">
+                    <a href="{{ path('app_category_index') }}">Liste des catégories</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="{{ path('app_media_index') }}">Liste des médias</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="{{ path('app_product_index') }}">Liste des produits</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

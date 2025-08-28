@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Media{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Détails Catégorie</h1>
+
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ media.id }}</td>
+                </tr>
+                <tr>
+                    <th>Type</th>
+                    <td>{{ media.type }}</td>
+                </tr>
+                <tr>
+                    <th>Path</th>
+                    <td>{{ media.path }}</td>
+                </tr>
+                <tr>
+                    <th>Alt</th>
+                    <td>{{ media.alt }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_media_index') }}" class="btn btn-secondary">Retour à la liste</a>
+
+        <a href="{{ path('app_media_edit', {'id': media.id}) }}" class="btn btn-warning">Modifier</a>
+
+    {{ include('media/_delete_form.html.twig') }}
+{% endblock %}

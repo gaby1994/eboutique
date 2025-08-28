@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New CommandLine{% endblock %}
+
+{% block body %}
+    <h1>Create new CommandLine</h1>
+
+    {{ include('command_line/_form.html.twig') }}
+
+    <a href="{{ path('app_command_line_index') }}">back to list</a>
+{% endblock %}
