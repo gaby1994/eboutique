@@ -162,8 +162,22 @@ class ProfileController extends AbstractController
         // Récupère toutes les commandes de l'utilisateur
         $orders = $ordersRepository->findBy(['user' => $user]);
 
+        $validOrders = [];
+        foreach ($orders as $order) {
+            $total = 0;
+            foreach ($order->getCommandLines() as $line) {
+                $product = $line->getProduct();
+                $quantity = $line->getQuantity() ?? 0;
+                $price = $product ? $product->getPriceHT() : 0;
+                $total += $price * $quantity;
+            }
+            if ($total > 0) {
+                $validOrders[] = $order;
+            }
+        }
+
         return $this->render('profile/orders.html.twig', [
-            'orders' => $orders,
+            'orders' => $validOrders,
         ]);
     }
 }

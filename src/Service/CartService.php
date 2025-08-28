@@ -10,9 +10,9 @@ use App\Entity\User;
 
 class CartService
 {
-    private $session;
-    private $em;
-    private $userCartRepository;
+    private \Symfony\Component\HttpFoundation\Session\SessionInterface $session;
+    private EntityManagerInterface $em;
+    private UserCartRepository $userCartRepository;
     private ?User $user;
 
     public function __construct(
@@ -123,12 +123,11 @@ class CartService
                 $total += $product->getPriceHT() * $quantity;
             }
         }
-
         return $total;
     }
 
     /**
-     * Définir l'utilisateur courant
+     * Définit l'utilisateur courant
      */
     public function setUser(User $user): void
     {

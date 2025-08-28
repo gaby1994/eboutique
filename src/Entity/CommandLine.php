@@ -17,6 +17,7 @@ class CommandLine
     private ?int $quantity = null;
 
     #[ORM\ManyToOne(inversedBy: 'commandLines')]
+    #[ORM\JoinColumn(onDelete: "SET NULL", nullable: true)]
     private ?Orders $orders = null;
 
     #[ORM\ManyToOne(inversedBy: 'commandLines')]

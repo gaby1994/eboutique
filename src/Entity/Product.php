@@ -28,6 +28,7 @@ class Product
     private ?bool $available = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
+    #[ORM\JoinColumn(onDelete: "SET NULL", nullable: true)]
     private ?Category $category = null;
 
     /**

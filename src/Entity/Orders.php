@@ -22,9 +22,11 @@ class Orders
     private ?\DateTime $dateHour = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
+    #[ORM\JoinColumn(nullable: true)]
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
+    #[ORM\JoinColumn(nullable: true)]
     private ?CustomerAddress $customerAddress = null;
 
     /**
