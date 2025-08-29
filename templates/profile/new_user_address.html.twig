@@ -5,9 +5,8 @@
 {% block body %}
     <div class="container mt-4">
         <h1 class="text-center">Créer une nouvelle Adresse de Livraison</h1>
-
         {{ include('customer_address/_form.html.twig', {'form': form, 'button_label': 'Ajouter'}) }}
-        <div class="w-50 mx-auto">
+        <div class="w-50 mx-auto text-center">
             <a href="{{ path('app_profile_addresses') }}" class="btn btn-secondary mt-2">Retour à la liste des Adresses de Livraison</a>
         </div>
     </div>
